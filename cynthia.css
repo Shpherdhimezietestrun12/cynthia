@@ -3,8 +3,8 @@ body {
 }
 
 .cynthia-present {
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
     background-color: rgb(0, 0, 10);
     position: fixed;
     left: 50%;
@@ -14,4 +14,115 @@ body {
     background-size: cover;
     background-position: center;
     border-radius: 200px;
+}
+
+.text-loading {
+    background-color: rgba(1, 1, 37, 0.5);
+    position: fixed;
+    left: 50%;
+    top: 78%;
+    transform: translate(-50%, -50%);
+    border-radius: 25px;
+    overflow-y: auto;
+    max-width: 300px;
+    max-height: 200px;
+}
+
+.reload-it {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(3, 3, 99, 0.5);
+    position: fixed;
+    left: 1.5%;
+    top: 2.5%;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+.reload-it-two {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(3, 3, 99, 0.5);
+    position: fixed;
+    right: 1.5%;
+    top: 2.5%;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+.reload-img {
+    zoom: 20%;
+}
+
+.par-888 {
+    font-size: 16px;
+    color: white;
+    font-family: "Cabri ", sans-serif;
+    position: relative;
+    font-weight: bold;
+    padding: 15px;
+    margin: 0;
+    /* Add this */
+}
+
+.text-loading::-webkit-scrollbar {
+    width: 6px;
+    /* width of the scrollbar */
+    height: 100%;
+    /* height of the scrollbar (for horizontal scrollbars) */
+}
+
+.text-loading::-webkit-scrollbar-track {
+    background-color: transparent;
+    /* color of the track */
+    border-radius: 10px;
+}
+
+.text-loading::-webkit-scrollbar-thumb {
+    background: rgb(1, 1, 124);
+    /* color of the scrollbar thumb */
+    border-radius: 10px;
+}
+
+.text-loading::-webkit-scrollbar-thumb:hover {
+    background: rgb(1, 1, 124);
+    /* color of the scrollbar thumb on hover */
+}
+
+.Up-info {
+    width: 140px;
+    height: 45px;
+    background-color: rgba(3, 3, 99, 0.5);
+    position: fixed;
+    left: 1.5%;
+    top: 6%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    font-family: "Cabri ", sans-serif;
+    font-weight: bold;
+    left: 50%;
+    color: rgb(197, 197, 197);
+    font-size: 13px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: InfoShow 2s forwards;
+    animation-delay: 5.5s;
+}
+
+@keyframes InfoShow {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
