@@ -3,8 +3,8 @@ body {
 }
 
 .cynthia-present {
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
     background-color: rgb(0, 0, 10);
     position: fixed;
     left: 50%;
