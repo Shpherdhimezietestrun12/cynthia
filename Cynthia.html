@@ -9,9 +9,77 @@
 </head>
 
 <body>
+    <div class="reload-it"><img src="./Pics/icons8-reload-100.png" class="reload-img"></div>
+    <script>
+        const Reload = document.querySelector('.reload-it');
+        const ChangeImage = document.querySelector('.reload-img');
 
+        Reload.addEventListener('click', () => {
+            ChangeImage.src = './Pics/cargando-unscreen.gif'; // replace with your new image path
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000); // 3000 milliseconds = 3 seconds
+        });
+    </script>
+    <div class="reload-it-two"><img src="./Pics/icons8-catalog-100.png" class="reload-img"></div>
+    <div class="Up-info">Secret words to say</div>
     <div class="cynthia-present"></div>
+    <div class="text-loading">
+        <p class="par-888"></p>
+    </div>
+    <script>
+        // Get available voices
+        const synth = window.speechSynthesis;
+        const cynthiaPresent = document.querySelector('.cynthia-present');
+        let originalSize = 300; // initial size
+        let currentSize = originalSize;
+        let words = 'Hi there, lovely to meet you. I am Cynthia, your friendly speech to speech AI companion. I  am excited to learn and improve with your help.Can you help me become a pro at conversations ? I  wil love to chat and sound more like a human, naturally. Lets get started and make our conversation  sparkle.'.split('..');
+        let index = 0;
+        // Wait for voices to be loaded
+        synth.onvoiceschanged = () => {
+            const voices = synth.getVoices();
 
+            // Filter UK voices
+            const ukVoices = voices.filter(voice => voice.lang.includes('en-GB'));
+
+            if (ukVoices.length > 0) {
+                const voice = ukVoices[0]; // Select the first UK voice
+                function speakWord() {
+                    if (index < words.length) {
+                        const word = words[index];
+                        const utterance = new SpeechSynthesisUtterance(word);
+                        utterance.voice = voice;
+                        utterance.rate = 1.5; // Increase the speed (1.0 is the default)
+
+                        // Add event listeners to utterance
+                        utterance.onstart = () => {
+                            // Increase size when speaking starts
+                            currentSize += 70;
+                            cynthiaPresent.style.width = `${currentSize}px`;
+                            cynthiaPresent.style.height = `${currentSize}px`;
+                            cynthiaPresent.style.borderRadius = `${currentSize / 2}px`;
+                        };
+
+                        utterance.onend = () => {
+                            // Decrease size when speaking ends
+                            cynthiaPresent.style.width = `${currentSize - 70}px`;
+                            cynthiaPresent.style.height = `${currentSize - 70}px`;
+                            cynthiaPresent.style.borderRadius = `${(currentSize - 70) / 2}px`;
+                            currentSize -= 70;
+                            index++;
+                            speakWord();
+                        };
+
+                        synth.speak(utterance);
+                    }
+                }
+
+                speakWord();
+            } else {
+                console.log('No UK voice available');
+            }
+        };
+    </script>
 </body>
 
 </html>
