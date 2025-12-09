@@ -28,57 +28,69 @@
         <p class="par-888"></p>
     </div>
     <script>
-        // Get available voices
-        const synth = window.speechSynthesis;
-        const cynthiaPresent = document.querySelector('.cynthia-present');
-        let originalSize = 300; // initial size
-        let currentSize = originalSize;
-        let words = 'Hi there, lovely to meet you. I am Cynthia, your friendly speech to speech AI companion. I  am excited to learn and improve with your help.Can you help me become a pro at conversations ? I  wil love to chat and sound more like a human, naturally. Lets get started and make our conversation  sparkle.'.split('..');
-        let index = 0;
-        // Wait for voices to be loaded
-        synth.onvoiceschanged = () => {
-            const voices = synth.getVoices();
+        // Request speaker access
+        navigator.mediaDevices.getUserMedia({
+                audio: true
+            })
+            .then((stream) => {
+                console.log('Microphone access granted');
 
-            // Filter UK voices
-            const ukVoices = voices.filter(voice => voice.lang.includes('en-GB'));
+                // Get available voices
+                const synth = window.speechSynthesis;
+                const cynthiaPresent = document.querySelector('.cynthia-present');
+                let originalSize = 300; // initial size
+                let currentSize = originalSize;
+                let words = 'Hi there, lovely to meet you! I am Cynthia, your friendly speech  to  speech AI companion.I am excited to learn and improve with your help.Can you help me become a pro at conversations ? I will love to chat and sound more like a human, naturally.Lets get started and make our conversation  sparkle '.split('.');
+                let index = 0;
 
-            if (ukVoices.length > 0) {
-                const voice = ukVoices[0]; // Select the first UK voice
-                function speakWord() {
-                    if (index < words.length) {
-                        const word = words[index];
-                        const utterance = new SpeechSynthesisUtterance(word);
-                        utterance.voice = voice;
-                        utterance.rate = 1.5; // Increase the speed (1.0 is the default)
+                // Wait for voices to be loaded
+                synth.onvoiceschanged = () => {
+                    const voices = synth.getVoices();
 
-                        // Add event listeners to utterance
-                        utterance.onstart = () => {
-                            // Increase size when speaking starts
-                            currentSize += 70;
-                            cynthiaPresent.style.width = `${currentSize}px`;
-                            cynthiaPresent.style.height = `${currentSize}px`;
-                            cynthiaPresent.style.borderRadius = `${currentSize / 2}px`;
-                        };
+                    // Filter US voices
+                    const usVoices = voices.filter(voice => voice.lang.includes('en-US'));
 
-                        utterance.onend = () => {
-                            // Decrease size when speaking ends
-                            cynthiaPresent.style.width = `${currentSize - 70}px`;
-                            cynthiaPresent.style.height = `${currentSize - 70}px`;
-                            cynthiaPresent.style.borderRadius = `${(currentSize - 70) / 2}px`;
-                            currentSize -= 70;
-                            index++;
-                            speakWord();
-                        };
+                    if (usVoices.length > 0) {
+                        const voice = usVoices[0]; // Select the first US voice
 
-                        synth.speak(utterance);
+                        function speakWord() {
+                            if (index < words.length) {
+                                const word = words[index];
+                                const utterance = new SpeechSynthesisUtterance(word);
+                                utterance.voice = voice;
+
+                                // Add event listeners to utterance
+                                utterance.onstart = () => {
+                                    // Increase size when speaking starts
+                                    currentSize += 70;
+                                    cynthiaPresent.style.width = `${currentSize}px`;
+                                    cynthiaPresent.style.height = `${currentSize}px`;
+                                    cynthiaPresent.style.borderRadius = `${currentSize / 2}px`;
+                                };
+
+                                utterance.onend = () => {
+                                    // Decrease size when speaking ends
+                                    cynthiaPresent.style.width = `${currentSize - 70}px`;
+                                    cynthiaPresent.style.height = `${currentSize - 70}px`;
+                                    cynthiaPresent.style.borderRadius = `${(currentSize - 70) / 2}px`;
+                                    currentSize -= 70;
+                                    index++;
+                                    speakWord();
+                                };
+
+                                synth.speak(utterance);
+                            }
+                        }
+
+                        speakWord();
+                    } else {
+                        console.log('No US voice available');
                     }
-                }
-
-                speakWord();
-            } else {
-                console.log('No UK voice available');
-            }
-        };
+                };
+            })
+            .catch((error) => {
+                console.error('Microphone access denied');
+            });
     </script>
 </body>
 
