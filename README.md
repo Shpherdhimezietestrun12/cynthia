@@ -1,4 +1,6 @@
-# cynthia
-Voice modulated AI
+# Cynthia project 1 ...
+ A voice text base AI that works through its interface and accessible to all device through Web.
 
-presentation for first deployment 
+ phase 1 of construction define the customtkinter that is the interface it will be working with
+ ..
+ 
